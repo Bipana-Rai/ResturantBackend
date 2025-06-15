@@ -9,9 +9,9 @@ const nodemailer = require("nodemailer");
 
 router.post("/signupData", async (req, res) => {
   try {
-    const { email, password, fullName, phone,role } = req.body;
+    const { email, password, fullName, phone, role } = req.body;
     console.log("hello");
-    if (!email || !password || !fullName || !phone ||!role) {
+    if (!email || !password || !fullName || !phone || !role) {
       return res.status(400).json({ message: "Missing Field" });
     }
 
@@ -25,7 +25,7 @@ router.post("/signupData", async (req, res) => {
       password: hashPassword,
       fullName,
       phone,
-      role
+      role,
     });
     const saveData = await user.save();
 
@@ -82,8 +82,8 @@ router.get("/admin/verify", verifyJWT, (req, res) => {
 router.post("/logout", (req, res) => {
   res.clearCookie("jwt", {
     httpOnly: true,
-    sameSite: "lax",
-     secure: true, 
+    sameSite: "none",
+    secure: true,
   });
   res.status(200).json({ message: "Logged out successfully" });
 });

@@ -15,17 +15,12 @@ const socketIo = require("socket.io"); //for real time notification
 const cookieParser = require("cookie-parser");
 
 const app = express();
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "http://localhost:5175",
-"https://resturant-admin-ten.vercel.app"
-];
+const allowedOrigin = "https://resturant-admin-ten.vercel.app";
 
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: allowedOrigins,
+    origin: allowedOrigin,
     credentials: true,
   },
 });
@@ -38,16 +33,18 @@ io.on("connection", (socket) => {
 });
 
 app.use(express.json());
+
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin || origin === allowedOrigin) {
         callback(null, true);
       } else {
+        console.log("Blocked by CORS:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true,
+    credentials: true, // VERY IMPORTANT for cookies
   })
 );
 

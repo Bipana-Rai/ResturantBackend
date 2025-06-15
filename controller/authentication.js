@@ -58,7 +58,8 @@ router.post("/loginData", async (req, res) => {
     res.cookie("jwt", token, {
       httpOnly: true, //yesko kamm vaneko client side le yeslae change garna or access garna bata rokxa
       maxAge: 60 * 60 * 1000, //yo veneko cookie chai 1 hour ma expire hunxa
-      sameSite: "lax",
+      sameSite: "none",
+      secure: true,
     });
 
     res.status(201).json({ message: " Login Successfully", token });

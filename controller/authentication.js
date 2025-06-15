@@ -83,6 +83,7 @@ router.post("/logout", (req, res) => {
   res.clearCookie("jwt", {
     httpOnly: true,
     sameSite: "lax",
+     secure: true, 
   });
   res.status(200).json({ message: "Logged out successfully" });
 });

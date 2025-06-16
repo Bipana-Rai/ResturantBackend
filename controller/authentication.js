@@ -37,6 +37,7 @@ router.post("/signupData", async (req, res) => {
 router.post("/loginData", async (req, res) => {
   try {
     const { email, password } = req.body;
+    
 
     if (!email || !password) {
       return res.status(400).json({ message: "field is missing" });
@@ -47,7 +48,7 @@ router.post("/loginData", async (req, res) => {
     }
     const isPasswordValidate = await bcrypt.compare(
       password,
-      doesExistUser.password
+      doesExistUser.password  
     );
     if (!isPasswordValidate) {
       return res.status(400).json({ message: "Incorrect Password" });

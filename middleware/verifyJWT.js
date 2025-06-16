@@ -2,8 +2,7 @@ const jwt=require("jsonwebtoken")
 const secret=require("../config")
 const varifyJWT=(req,res,next)=>{
     const token=req.cookies.jwt //req.cookie le chai direct cookie store vako bata jwt vaneko token dinxa ,jwt vaneko chai cookie ko name ho jun chai hamile agi res,cookie ma lekheko thim
-    console.log("Token found:", token);
-
+    console.log("Cookies received:", req.cookies);
     if(!token){
         return res.status(401).json({message:"No token,authorization denied"})
     }

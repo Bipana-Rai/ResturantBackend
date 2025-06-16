@@ -15,6 +15,7 @@ const socketIo = require("socket.io"); //for real time notification
 const cookieParser = require("cookie-parser");
 
 const app = express();
+app.set("trust proxy", 1);
 const allowedOrigin = [
   "https://resturant-admin-ten.vercel.app",
   "https://resturant-admin-2zy376jme-bipana-rais-projects.vercel.app",

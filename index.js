@@ -15,7 +15,11 @@ const socketIo = require("socket.io"); //for real time notification
 const cookieParser = require("cookie-parser");
 
 const app = express();
-const allowedOrigin = "https://resturant-admin-ten.vercel.app";
+const allowedOrigin = [
+  "https://resturant-admin-ten.vercel.app",
+  "https://resturant-admin-2zy376jme-bipana-rais-projects.vercel.app",
+];
+
 
 const server = http.createServer(app);
 const io = socketIo(server, {

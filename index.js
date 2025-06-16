@@ -22,12 +22,26 @@ const allowedOrigin = [
 
 
 const server = http.createServer(app);
+// const io = socketIo(server, {
+//   cors: {
+//     origin: allowedOrigin,
+//     credentials: true,
+//   },
+// });
 const io = socketIo(server, {
   cors: {
-    origin: allowedOrigin,
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigin.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   },
 });
+
 io.on("connection", (socket) => {
   console.log("a cient connected via socked.io");
 
@@ -41,7 +55,10 @@ app.use(express.json());
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || origin === allowedOrigin) {
+      // Allow requests with no origin (like Postman, curl, mobile apps)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigin.includes(origin)) {
         callback(null, true);
       } else {
         console.log("Blocked by CORS:", origin);
@@ -51,6 +68,8 @@ app.use(
     credentials: true, // VERY IMPORTANT for cookies
   })
 );
+
+
 
 app.use(cookieParser());
 
